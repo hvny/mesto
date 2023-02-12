@@ -1,0 +1,9 @@
+.element {
+    width: fit-content;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-sizing: border-box;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+}

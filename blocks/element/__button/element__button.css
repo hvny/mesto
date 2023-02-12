@@ -1,0 +1,18 @@
+.element__button {
+    width: 22px;
+    height: 19px;
+    margin: 30px 30px 0 0;
+    border: none;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    background-image: url("../../../images/heart-shaped-item.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: opacity .1s linear .1s;
+    cursor: pointer;
+    align-self: start;
+}
+
+.element__button:hover {
+    opacity: .5;
+}
