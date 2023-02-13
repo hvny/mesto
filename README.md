@@ -13,6 +13,6 @@
 
 **Сайт**
 
-* [Ссылка на веб-страницу](https://hvny.github.io/russian-travel/)
+* [Ссылка на веб-страницу](https://hvny.github.io/mesto/)
 
 
