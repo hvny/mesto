@@ -19,6 +19,7 @@
     .popup__button_type_close {
         width: 20px;
         height: 20px;
+        background-image: url("../../../../images/popup-close-button-adaptive.svg");
         top: -36px;
         right: 0;
     }
