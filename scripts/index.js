@@ -4,6 +4,7 @@ let userStatus = profileContainer.querySelector(".profile__status");
 let profileEditButton = profileContainer.querySelector(".profile__button_type_edit");
 
 let popup = document.querySelector(".popup");
+let popupForm = popup.querySelector(".popup__form");
 let popupCloseButton = popup.querySelector(".popup__button_type_close");
 let nameInput = popup.querySelector("#nameInput");
 let infoInput = popup.querySelector("#infoInput");
@@ -27,7 +28,6 @@ function handleFormSubmit(evt) { //кнопка "сохранить"
 }
 
 
-
 profileEditButton.addEventListener("click", openPopup);
 popupCloseButton.addEventListener("click", closePopup);
-popup.addEventListener("submit", handleFormSubmit);
+popupForm.addEventListener("submit", handleFormSubmit);
