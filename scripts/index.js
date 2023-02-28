@@ -59,11 +59,11 @@ const initialCards = [{
 /*создаём карточку*/
 
 function createCard(title, url) {
-    let userCard = userTemplate.querySelector(".element").cloneNode(true);
-    let userCardTitle = userCard.querySelector(".element__title");
-    let userCardImage = userCard.querySelector(".element__image");
-    let cardLikeButton = userCard.querySelector(".element__button_type_like");
-    let cardDeleteButton = userCard.querySelector(".element__button_type_close");
+    const userCard = userTemplate.querySelector(".element").cloneNode(true);
+    const userCardTitle = userCard.querySelector(".element__title");
+    const userCardImage = userCard.querySelector(".element__image");
+    const cardLikeButton = userCard.querySelector(".element__button_type_like");
+    const cardDeleteButton = userCard.querySelector(".element__button_type_close");
     userCardTitle.textContent = title;
     userCardImage.setAttribute("src", url);
     userCardImage.setAttribute("alt", title);
