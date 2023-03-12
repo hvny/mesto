@@ -5,6 +5,22 @@ const profileEditButton = profileContainer.querySelector(".profile__button_type_
 const profileAddButton = profileContainer.querySelector(".profile__button_type_add");
 
 const popup = document.querySelector(".popup");
+const popupList = Array.from(document.querySelectorAll(".popup"));
+
+popupList.forEach((somePopup) => {
+    document.addEventListener("keydown", (evt) => {
+        if (evt.key === "Escape" && somePopup.classList.contains("popup_opened")) {
+            closePopup(somePopup);
+        }
+    });
+
+    document.addEventListener("click", (evt) => {
+        if (evt.target.classList.contains("popup")) {
+            closePopup(somePopup);
+        }
+    });
+});
+
 const editPopup = document.querySelector("#editPopup");
 const editForm = editPopup.querySelector("#editProfileForm");
 const profileName = editPopup.querySelector("#profileNameInput");
@@ -58,7 +74,7 @@ const initialCards = [{
 
 /*создаём карточку*/
 
-function createCard(title, url) {
+const createCard = (title, url) => {
     const userCard = userTemplate.querySelector(".element").cloneNode(true);
     const userCardTitle = userCard.querySelector(".element__title");
     const userCardImage = userCard.querySelector(".element__image");
@@ -84,14 +100,14 @@ function createCard(title, url) {
     });
 
     return userCard;
-}
+};
 
 
 /*добавляем карточку в начало*/
 
-function addCard(card) {
+const addCard = (card) => {
     cardsContainer.prepend(card);
-}
+};
 
 /*добавляем карточки из массива*/
 
@@ -101,20 +117,20 @@ initialCards.forEach((item) => {
 
 /*открытие попапа*/
 
-function openPopup(somePopup) {
+const openPopup = (somePopup) => {
     somePopup.classList.add("popup_opened");
-}
+};
 
 /*закрытие попапа*/
 
-function closePopup(somePopup) {
+const closePopup = (somePopup) => {
     somePopup.classList.remove("popup_opened");
-}
+};
 
 
 /*попап изменения профиля*/
 
-function handleEditFormSubmit(evt) { //кнопка "сохранить"
+const handleEditFormSubmit = (evt) => { //кнопка "сохранить"
     evt.preventDefault();
     userName.textContent = profileName.value;
     userStatus.textContent = profileInfo.value;
@@ -135,11 +151,11 @@ profileAddButton.addEventListener("click", () => { //открываем попа
     openPopup(addPopup);
 });
 
-function handleAddFormSubmit(evt) { //добавляем карточку
+const handleAddFormSubmit = (evt) => { //добавляем карточку
     evt.preventDefault();
     addCard(createCard(placeName.value, placeLink.value));
     addForm.reset();
     closePopup(addPopup);
-}
+};
 
 addForm.addEventListener("submit", handleAddFormSubmit);
