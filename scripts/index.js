@@ -7,15 +7,9 @@ const profileAddButton = profileContainer.querySelector(".profile__button_type_a
 const popup = document.querySelector(".popup");
 const popupList = Array.from(document.querySelectorAll(".popup"));
 
-popupList.forEach((somePopup) => {
-    document.addEventListener("keydown", (evt) => {
-        if (evt.key === "Escape" && somePopup.classList.contains("popup_opened")) {
-            closePopup(somePopup);
-        }
-    });
-
+popupList.forEach((somePopup) => { //закрытие попапа при клике на область вне формы
     document.addEventListener("click", (evt) => {
-        if (evt.target.classList.contains("popup")) {
+        if (evt.target.classList.contains("popup_opened")) {
             closePopup(somePopup);
         }
     });
@@ -119,12 +113,21 @@ initialCards.forEach((item) => {
 
 const openPopup = (somePopup) => {
     somePopup.classList.add("popup_opened");
+    document.addEventListener("keydown", closePopupByEsc);
 };
 
 /*закрытие попапа*/
 
 const closePopup = (somePopup) => {
     somePopup.classList.remove("popup_opened");
+    document.removeEventListener("keydown", closePopupByEsc);
+};
+
+const closePopupByEsc = (evt) => {
+    if (evt.key === "Escape") {
+        const closedEscPopup = document.querySelector(".popup_opened");
+        closePopup(closedEscPopup);
+    }
 };
 
 
