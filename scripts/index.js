@@ -22,6 +22,7 @@ const profileInfo = editPopup.querySelector("#profileInfoInput");
 
 const addPopup = document.querySelector("#addPopup");
 const addForm = addPopup.querySelector("#addCardForm");
+const addButton = addPopup.querySelector("#addCardSubmitButton");
 const placeName = addPopup.querySelector("#placeNameInput");
 const placeLink = addPopup.querySelector("#placeLinkInput");
 
@@ -125,8 +126,8 @@ const closePopup = (somePopup) => {
 
 const closePopupByEsc = (evt) => {
     if (evt.key === "Escape") {
-        const closedEscPopup = document.querySelector(".popup_opened");
-        closePopup(closedEscPopup);
+        const openedPopup = document.querySelector(".popup_opened");
+        closePopup(openedPopup);
     }
 };
 
@@ -152,6 +153,9 @@ editForm.addEventListener("submit", handleEditFormSubmit);
 
 profileAddButton.addEventListener("click", () => { //открываем попап 
     openPopup(addPopup);
+    addButton.classList.add("popup__button_type_inactive");
+    addButton.disabled = true;
+
 });
 
 const handleAddFormSubmit = (evt) => { //добавляем карточку
