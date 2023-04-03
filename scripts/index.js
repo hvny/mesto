@@ -1,10 +1,11 @@
+import { Card } from "./Card.js";
+
 const profileContainer = document.querySelector(".profile");
 const userName = profileContainer.querySelector(".profile__name");
 const userStatus = profileContainer.querySelector(".profile__status");
 const profileEditButton = profileContainer.querySelector(".profile__button_type_edit");
 const profileAddButton = profileContainer.querySelector(".profile__button_type_add");
 
-const popup = document.querySelector(".popup");
 const popupList = Array.from(document.querySelectorAll(".popup"));
 
 popupList.forEach((somePopup) => { //закрытие попапа при клике на область вне формы
@@ -27,14 +28,11 @@ const placeName = addPopup.querySelector("#placeNameInput");
 const placeLink = addPopup.querySelector("#placeLinkInput");
 
 const imagePopup = document.querySelector("#imagePopup");
-const imagePopupCloseButton = imagePopup.querySelector(".popup__button_type_close");
-const imageOpened = imagePopup.querySelector(".popup__image");
-const imageTitle = imagePopup.querySelector(".popup__image-title");
 
 const cardsContainer = document.querySelector(".elements");
-const userTemplate = document.querySelector("#element").content;
 
 const closeButtons = document.querySelectorAll(".popup__button_type_close");
+
 
 closeButtons.forEach((button) => {
     const popup = button.closest(".popup")
@@ -67,36 +65,12 @@ const initialCards = [{
     }
 ];
 
-/*создаём карточку*/
+//создаём экземпляр карточки
 
 const createCard = (title, url) => {
-    const userCard = userTemplate.querySelector(".element").cloneNode(true);
-    const userCardTitle = userCard.querySelector(".element__title");
-    const userCardImage = userCard.querySelector(".element__image");
-    const cardLikeButton = userCard.querySelector(".element__button_type_like");
-    const cardDeleteButton = userCard.querySelector(".element__button_type_close");
-    userCardTitle.textContent = title;
-    userCardImage.setAttribute("src", url);
-    userCardImage.setAttribute("alt", title);
-
-    userCardImage.addEventListener("click", (evt) => { //открываем фото
-        imageOpened.src = url;
-        imageOpened.alt = title;
-        imageTitle.textContent = title;
-        openPopup(imagePopup);
-    });
-
-    cardLikeButton.addEventListener("click", (evt) => { //лайкаем карточку
-        evt.target.classList.toggle('element__button_type_like_active');
-    });
-
-    cardDeleteButton.addEventListener("click", () => { //удаляем карточку
-        cardsContainer.removeChild(userCard);
-    });
-
-    return userCard;
+    const someCard = new Card(title, url, "#element").generateCard();
+    return someCard;
 };
-
 
 /*добавляем карточку в начало*/
 
@@ -166,3 +140,6 @@ const handleAddFormSubmit = (evt) => { //добавляем карточку
 };
 
 addForm.addEventListener("submit", handleAddFormSubmit);
+
+
+export { openPopup, cardsContainer, imagePopup };
