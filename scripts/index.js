@@ -1,4 +1,5 @@
 import { Card } from "./Card.js";
+import { FormValidator } from "./FormValidator.js";
 
 const profileContainer = document.querySelector(".profile");
 const userName = profileContainer.querySelector(".profile__name");
@@ -28,11 +29,8 @@ const placeName = addPopup.querySelector("#placeNameInput");
 const placeLink = addPopup.querySelector("#placeLinkInput");
 
 const imagePopup = document.querySelector("#imagePopup");
-
 const cardsContainer = document.querySelector(".elements");
-
 const closeButtons = document.querySelectorAll(".popup__button_type_close");
-
 
 closeButtons.forEach((button) => {
     const popup = button.closest(".popup")
@@ -64,6 +62,23 @@ const initialCards = [{
         link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
     }
 ];
+
+const validationElems = {
+    formSelector: '.popup__form',
+    inputSelector: '.popup__input',
+    submitButtonSelector: '.popup__button_type_save',
+    inactiveButtonClass: 'popup__button_type_inactive',
+    inputErrorClass: 'popup__input_type_error',
+    errorClass: 'popup__input-error'
+};
+
+//валидация форм
+
+const formList = Array.from(document.querySelectorAll(validationElems.formSelector));
+formList.forEach((formElement) => {
+    const validatingForm = new FormValidator(validationElems, formElement);
+    validatingForm.enableValidation();
+});
 
 //создаём экземпляр карточки
 
