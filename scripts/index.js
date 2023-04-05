@@ -73,10 +73,12 @@ const validationElems = {
 };
 
 //валидация форм
-
+const formDict = {};
 const formList = Array.from(document.querySelectorAll(validationElems.formSelector));
 formList.forEach((formElement) => {
     const validatingForm = new FormValidator(validationElems, formElement);
+    const formName = formElement.getAttribute("name");
+    formDict[formName] = validatingForm;
     validatingForm.enableValidation();
 });
 
@@ -142,9 +144,7 @@ editForm.addEventListener("submit", handleEditFormSubmit);
 
 profileAddButton.addEventListener("click", () => { //открываем попап 
     openPopup(addPopup);
-    addButton.classList.add("popup__button_type_inactive");
-    addButton.disabled = true;
-
+    formDict["cardForm"].resetValidation();
 });
 
 const handleAddFormSubmit = (evt) => { //добавляем карточку
@@ -157,4 +157,4 @@ const handleAddFormSubmit = (evt) => { //добавляем карточку
 addForm.addEventListener("submit", handleAddFormSubmit);
 
 
-export { openPopup, cardsContainer, imagePopup };
+export { openPopup, imagePopup };
