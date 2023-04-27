@@ -1,5 +1,10 @@
 import { Card } from "./Card.js";
 import { FormValidator } from "./FormValidator.js";
+import Section from "./Section.js";
+import PopupWithImage from "./PopupWithImage.js";
+import Popup from "./Popup.js";
+import PopupWithForm from "./PopupWithForm.js";
+import UserInfo from "./UserInfo.js";
 
 const profileContainer = document.querySelector(".profile");
 const userName = profileContainer.querySelector(".profile__name");
@@ -9,13 +14,6 @@ const profileAddButton = profileContainer.querySelector(".profile__button_type_a
 
 const popupList = Array.from(document.querySelectorAll(".popup"));
 
-popupList.forEach((somePopup) => { //закрытие попапа при клике на область вне формы
-    document.addEventListener("click", (evt) => {
-        if (evt.target.classList.contains("popup_opened")) {
-            closePopup(somePopup);
-        }
-    });
-});
 
 const editPopup = document.querySelector("#editPopup");
 const editForm = editPopup.querySelector("#editProfileForm");
@@ -30,36 +28,38 @@ const placeLink = addPopup.querySelector("#placeLinkInput");
 
 const imagePopup = document.querySelector("#imagePopup");
 const cardsContainer = document.querySelector(".elements");
-const closeButtons = document.querySelectorAll(".popup__button_type_close");
 
-closeButtons.forEach((button) => {
-    const popup = button.closest(".popup")
-    button.addEventListener("click", () => closePopup(popup));
-});
+const listSelector = ".elements";
+const imgPopupSelector = "#imagePopup";
+const profilePopupSelector = "#editPopup";
+const addPopupSelector = "#addPopup";
+const userNameSelector = ".profile__name";
+const userStatusSelector = ".profile__status";
+
 
 const initialCards = [{
-        name: 'Архыз',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+        placeName: 'Архыз',
+        placeLink: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
     },
     {
-        name: 'Челябинская область',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+        placeName: 'Челябинская область',
+        placeLink: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
     },
     {
-        name: 'Иваново',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+        placeName: 'Иваново',
+        placeLink: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
     },
     {
-        name: 'Камчатка',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+        placeName: 'Камчатка',
+        placeLink: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
     },
     {
-        name: 'Холмогорский район',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+        placeName: 'Холмогорский район',
+        placeLink: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
     },
     {
-        name: 'Байкал',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+        placeName: 'Байкал',
+        placeLink: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
     }
 ];
 
@@ -72,6 +72,7 @@ const validationElems = {
     errorClass: 'popup__input-error'
 };
 
+
 //валидация форм
 const formDict = {};
 const formList = Array.from(document.querySelectorAll(validationElems.formSelector));
@@ -82,79 +83,63 @@ formList.forEach((formElement) => {
     validatingForm.enableValidation();
 });
 
-//создаём экземпляр карточки
 
-const createCard = (title, url) => {
-    const someCard = new Card(title, url, "#element").generateCard();
-    return someCard;
-};
-
-/*добавляем карточку в начало*/
-
-const addCard = (card) => {
-    cardsContainer.prepend(card);
-};
-
-/*добавляем карточки из массива*/
-
-initialCards.forEach((item) => {
-    addCard(createCard(item.name, item.link));
-});
-
-/*открытие попапа*/
-
-const openPopup = (somePopup) => {
-    somePopup.classList.add("popup_opened");
-    document.addEventListener("keydown", closePopupByEsc);
-};
-
-/*закрытие попапа*/
-
-const closePopup = (somePopup) => {
-    somePopup.classList.remove("popup_opened");
-    document.removeEventListener("keydown", closePopupByEsc);
-};
-
-const closePopupByEsc = (evt) => {
-    if (evt.key === "Escape") {
-        const openedPopup = document.querySelector(".popup_opened");
-        closePopup(openedPopup);
-    }
-};
-
-
-/*попап изменения профиля*/
-
-const handleEditFormSubmit = (evt) => { //кнопка "сохранить"
-    evt.preventDefault();
-    userName.textContent = profileName.value;
-    userStatus.textContent = profileInfo.value;
-    closePopup(editPopup);
+/*создание экземпляра карточки*/
+const createCard = (item) => {
+    console.log(item);
+    const card = new Card(
+        item,
+        () => {
+            imgPopup.open(item);
+        },
+        "#element");
+    const cardElement = card.generateCard();
+    return cardElement;
 }
 
+
+const userInfo = new UserInfo({ userNameSelector, userStatusSelector });
+
+
+const profilePopup = new PopupWithForm(profilePopupSelector, (item) => {
+    userInfo.setUserInfo(item);
+    profilePopup.close();
+});
+profilePopup.setEventListeners();
+
+
+const addCardPopup = new PopupWithForm(addPopupSelector,
+    (item) => {
+        cardList.addItem(createCard(item));
+        addCardPopup.close();
+    }
+);
+addCardPopup.setEventListeners();
+
+
+const imgPopup = new PopupWithImage(imgPopupSelector);
+imgPopup.setEventListeners();
+
+
+/*карточки по умолчанию*/
+const cardList = new Section({
+    data: initialCards,
+    renderer: (item) => {
+        cardList.addItem(createCard(item));
+    },
+}, listSelector)
+
+cardList.renderItems();
+
+
+
 profileEditButton.addEventListener("click", () => { //открываем попап 
-    openPopup(editPopup);
-    profileName.value = userName.textContent;
-    profileInfo.value = userStatus.textContent;
+    profilePopup.open();
+    const getInfo = userInfo.getUserInfo();
+    profileName.value = getInfo.name;
+    profileInfo.value = getInfo.status;
 });
 
-editForm.addEventListener("submit", handleEditFormSubmit);
-
-/*попап добавления карточки*/
-
-profileAddButton.addEventListener("click", () => { //открываем попап 
-    openPopup(addPopup);
-    formDict["cardForm"].resetValidation();
+profileAddButton.addEventListener("click", () => {
+    addCardPopup.open();
 });
-
-const handleAddFormSubmit = (evt) => { //добавляем карточку
-    evt.preventDefault();
-    addCard(createCard(placeName.value, placeLink.value));
-    addForm.reset();
-    closePopup(addPopup);
-};
-
-addForm.addEventListener("submit", handleAddFormSubmit);
-
-
-export { openPopup, imagePopup };
