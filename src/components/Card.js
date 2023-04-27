@@ -1,4 +1,4 @@
-class Card {
+export default class Card {
     constructor(data, handleCardClick, cardSelector) {
         this._title = data.placeName;
         this._image = data.placeLink;
@@ -47,4 +47,3 @@ class Card {
         this._deleteButton.addEventListener("click", () => this._removeCard()); //обработчик кнопки удаления карточки
     }
 }
-export { Card };

@@ -5,17 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Место</title>
-    <link rel="stylesheet" href="./pages/index.css">
 </head>
 
 <body>
     <div class="page">
         <header class="header">
-            <img src="./images/logo.svg" alt="Логотип проекта" class="header__logo">
+            <img src="<%=require(../images/logo.svg)%>" alt="Логотип проекта" class="header__logo">
         </header>
         <main>
             <section class="profile">
-                <img src="./images/avatar.jpg" alt="Аватарка профиля" class="profile__avatar">
+                <img src="<%=require(../images/avatar.jpg)%>" alt="Аватарка профиля" class="profile__avatar">
                 <div class="profile__info">
                     <h1 class="profile__name">Жак-Ив Кусто</h1>
                     <button type="button" class="profile__button_type_edit profile__button"></button>
@@ -73,8 +72,6 @@
             <button type="button" class="element__button element__button_type_like"></button>
         </article>
     </template>
-
-    <script type="module" src="./scripts/index.js"></script>
 </body>
 
 </html>
