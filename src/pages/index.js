@@ -1,4 +1,4 @@
-import './index.css'; // добавьте импорт главного файла стилей 
+import './index.css';
 
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
@@ -21,7 +21,6 @@ import {
     initialCards
 } from "../utils/constants.js";
 
-
 //валидация форм
 const formDict = {};
 const formList = Array.from(document.querySelectorAll(validationElems.formSelector));
@@ -31,7 +30,6 @@ formList.forEach((formElement) => {
     formDict[formName] = validatingForm;
     validatingForm.enableValidation();
 });
-
 
 /*создание экземпляра карточки*/
 const createCard = (item) => {
@@ -61,7 +59,6 @@ const addCardPopup = new PopupWithForm(addPopupSelector, //попап добав
 );
 addCardPopup.setEventListeners();
 
-
 const imgPopup = new PopupWithImage(imgPopupSelector); //экземпляр попапа картинки
 imgPopup.setEventListeners();
 
@@ -80,9 +77,11 @@ profileEditButton.addEventListener("click", () => {
     const getInfo = userInfo.getUserInfo();
     profileName.value = getInfo.name;
     profileInfo.value = getInfo.status;
+    formDict["editProfileForm"].resetValidation();
 });
 
 /*обработчик открытия попапа добавления карточки*/
 profileAddButton.addEventListener("click", () => {
     addCardPopup.open();
+    formDict["cardForm"].resetValidation();
 });
