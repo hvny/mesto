@@ -12,7 +12,14 @@ export const profilePopupSelector = "#editPopup";
 export const addPopupSelector = "#addPopup";
 export const userNameSelector = ".profile__name";
 export const userStatusSelector = ".profile__status";
+export const userAvatarSelector = ".profile__avatar";
 
+export const userName = profileContainer.querySelector(userNameSelector);
+export const userStatus = profileContainer.querySelector(userStatusSelector);
+export const userAvatar = profileContainer.querySelector(userAvatarSelector);
+
+
+/*
 export const initialCards = [{
         placeName: 'Архыз',
         placeLink: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
@@ -38,7 +45,7 @@ export const initialCards = [{
         placeLink: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
     }
 ];
-
+*/
 export const validationElems = {
     formSelector: '.popup__form',
     inputSelector: '.popup__input',

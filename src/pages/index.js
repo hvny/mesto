@@ -7,6 +7,9 @@ import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
 import {
+    userName,
+    userStatus,
+    userAvatar,
     profileEditButton,
     profileAddButton,
     profileName,
@@ -18,7 +21,6 @@ import {
     userNameSelector,
     userStatusSelector,
     validationElems,
-    initialCards
 } from "../utils/constants.js";
 
 //валидация форм
@@ -30,6 +32,9 @@ formList.forEach((formElement) => {
     formDict[formName] = validatingForm;
     validatingForm.enableValidation();
 });
+
+const imgPopup = new PopupWithImage(imgPopupSelector); //экземпляр попапа картинки
+imgPopup.setEventListeners();
 
 /*создание экземпляра карточки*/
 const createCard = (item) => {
@@ -43,10 +48,66 @@ const createCard = (item) => {
     return cardElement;
 }
 
+/*карточки по умолчанию*/
+const defaultCards = () => {
+    fetch("https://mesto.nomoreparties.co/v1/cohort-65/cards", {
+            method: "GET",
+            headers: {
+                authorization: "107572fd-a23a-435b-9724-668d3d26cd42"
+            }
+        })
+        .then((res) => res.json())
+        .then((cards) => {
+            const cardList = new Section({
+                data: cards,
+                renderer: (item) => {
+                    cardList.addItem(createCard(item));
+                },
+            }, listSelector)
+            cardList.renderItems();
+        })
+}
+defaultCards();
+
+const sendUserInfo = ({ newName, newStatus }) => {
+    fetch("https://mesto.nomoreparties.co/v1/cohort-65/users/me", {
+        method: 'PATCH',
+        headers: {
+            authorization: "107572fd-a23a-435b-9724-668d3d26cd42",
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            name: newName,
+            about: newStatus
+        })
+    });
+}
+
+
+fetch("https://nomoreparties.co/v1/cohort-65/users/me", {
+        method: "GET",
+        headers: {
+            authorization: "107572fd-a23a-435b-9724-668d3d26cd42"
+        }
+    })
+    .then((res) => res.json())
+    .then((data) => {
+        userName.value = data["name"];
+        userStatus.value = data["about"];
+        userAvatar.src = data["avatar"];
+    })
+
+
+
+
+
 const userInfo = new UserInfo({ userNameSelector, userStatusSelector }); //информация профиля
 
 const profilePopup = new PopupWithForm(profilePopupSelector, (item) => { //попап изменения профиля
     userInfo.setUserInfo(item);
+    console.log("userInfo:", userInfo.getUserInfo());
+
+    //sendUserInfo(userInfo.getUserInfo());
     profilePopup.close();
 });
 profilePopup.setEventListeners();
@@ -59,17 +120,9 @@ const addCardPopup = new PopupWithForm(addPopupSelector, //попап добав
 );
 addCardPopup.setEventListeners();
 
-const imgPopup = new PopupWithImage(imgPopupSelector); //экземпляр попапа картинки
-imgPopup.setEventListeners();
 
-/*карточки по умолчанию*/
-const cardList = new Section({
-    data: initialCards,
-    renderer: (item) => {
-        cardList.addItem(createCard(item));
-    },
-}, listSelector)
-cardList.renderItems();
+
+
 
 /*обработчик открытия попапа изменения профиля*/
 profileEditButton.addEventListener("click", () => {
