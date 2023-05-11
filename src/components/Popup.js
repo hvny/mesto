@@ -26,6 +26,11 @@ export default class Popup {
         }
     }
 
+    loading(message) {
+        this._submitButton = this._popup.querySelector(".popup__button_type_save");
+        this._submitButton.textContent = message;
+    }
+
     setEventListeners() {
         this._closeButton.addEventListener("click", () => this.close());
         this._popup.addEventListener('mousedown', (evt) => this._handleOverlayClose(evt));

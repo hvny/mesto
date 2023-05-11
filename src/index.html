@@ -15,7 +15,9 @@
         </header>
         <main>
             <section class="profile">
-                <img src="<%=require('./images/avatar.jpg')%>" alt="Аватарка профиля" class="profile__avatar">
+                <div class="profile__avatar-container">
+                    <img src="<%=require('./images/avatar.jpg')%>" alt="Аватарка профиля" class="profile__avatar">
+                </div>
                 <div class="profile__info">
                     <h1 class="profile__name">Жак-Ив Кусто</h1>
                     <button type="button" class="profile__button_type_edit profile__button"></button>
@@ -37,7 +39,7 @@
                     <h2 class="popup__title">Редактировать профиль</h2>
                     <input type="text" name="name" value="" autocomplete="off" placeholder="Имя" class="popup__input" id="profileNameInput" minlength="2" maxlength="40" required>
                     <span class="profileNameInput-error popup__input-error"> </span>
-                    <input type="text" name="status" value="" autocomplete="off" placeholder="О себе" class="popup__input" id="profileInfoInput" minlength="2" maxlength="200" required>
+                    <input type="text" name="about" value="" autocomplete="off" placeholder="О себе" class="popup__input" id="profileInfoInput" minlength="2" maxlength="200" required>
                     <span class="profileInfoInput-error popup__input-error"> </span>
                     <button type="submit" class="popup__button_type_save popup__button">Сохранить</button>
                 </form>
@@ -48,11 +50,31 @@
                 <form name="cardForm" class="popup__form" id="addCardForm">
                     <button type="button" class="popup__button_type_close popup__button"></button>
                     <h2 class="popup__title">Новое место</h2>
-                    <input type="text" name="placeName" value="" autocomplete="off" placeholder="Название" class="popup__input" id="placeNameInput" minlength="2" maxlength="30" required>
+                    <input type="text" name="name" value="" autocomplete="off" placeholder="Название" class="popup__input" id="placeNameInput" minlength="2" maxlength="30" required>
                     <span class="placeNameInput-error popup__input-error"> </span>
-                    <input type="url" name="placeLink" value="" autocomplete="off" placeholder="Ссылка на картинку" class="popup__input" id="placeLinkInput" required>
+                    <input type="url" name="link" value="" autocomplete="off" placeholder="Ссылка на картинку" class="popup__input" id="placeLinkInput" required>
                     <span class="placeLinkInput-error popup__input-error"> </span>
                     <button type="submit" class="popup__button_type_save popup__button" id="addCardSubmitButton">Создать</button>
+                </form>
+            </div>
+        </div>
+        <div class="popup" id="editAvatarPopup">
+            <div class="popup__container">
+                <form name="editProfileForm" class="popup__form popup__form_type_avatar" id="editProfileForm">
+                    <button type="button" class="popup__button_type_close popup__button"></button>
+                    <h2 class="popup__title">Обновить Аватар</h2>
+                    <input type="url" name="avatar" value="" autocomplete="off" placeholder="Ссылка на картинку" class="popup__input" id="avatarInput" required>
+                    <span class="avatarInput-error popup__input-error"> </span>
+                    <button type="submit" class="popup__button_type_save popup__button">Сохранить</button>
+                </form>
+            </div>
+        </div>
+        <div class="popup" id="deleteCardPopup">
+            <div class="popup__container">
+                <form name="deleteCardForm" class="popup__form popup__form_type_delete" id="deleteCardForm">
+                    <button type="button" class="popup__button_type_close popup__button"></button>
+                    <h2 class="popup__title  popup__title_type_delete">Вы уверены?</h2>
+                    <button type="submit" class="popup__button_type_save popup__button">Да</button>
                 </form>
             </div>
         </div>
@@ -70,7 +92,10 @@
             <button class="element__button element__button_type_close"></button>
             <img src="src" alt="фото" class="element__image">
             <h2 class="element__title"></h2>
-            <button type="button" class="element__button element__button_type_like"></button>
+            <div class = "element__likes-container">
+                <button type="button" class="element__button element__button_type_like"></button>
+                <p class = "element__likes-counter">0</p>
+            </div>
         </article>
     </template>
 </body>
