@@ -2,6 +2,7 @@ export default class Popup {
     constructor(popupSelector) {
         this._popup = document.querySelector(popupSelector);
         this._closeButton = this._popup.querySelector(".popup__button_type_close");
+        this._submitButton = this._popup.querySelector(".popup__button_type_save");
     }
 
     open() {
@@ -27,7 +28,6 @@ export default class Popup {
     }
 
     loading(message) {
-        this._submitButton = this._popup.querySelector(".popup__button_type_save");
         this._submitButton.textContent = message;
     }
 

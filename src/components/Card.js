@@ -51,29 +51,30 @@ export default class Card {
         this._card = null;
     }
 
-    /*метод кнопки лайка*/
+    _isLiked() {
+        return this._likes.some((like) => like._id == this._userId)
+    }
+
     _cardLikeButton() {
-        if (this._likeButton.classList.contains('element__button_type_like_active')) {
-            this._likeButton.classList.remove('element__button_type_like_active');
+        if (this._isLiked()) {
             this._handleCardLikeRemove(this._cardId);
         } else {
-            this._likeButton.classList.add('element__button_type_like_active');
             this._handleCardLike(this._cardId);
         }
     }
 
     renderLikes(card) {
         this._likes = card.likes;
-        if (card.likes.length == 0) {
+        if (this._likes.length === 0) {
             this._likesQuantity.textContent = '0';
         } else {
             this._likesQuantity.textContent = this._likes.length;
         }
-        card.likes.forEach((like) => {
-            if (like._id == this._userId) {
-                this._likeButton.classList.add('element__button_type_like_active');
-            }
-        })
+        if (this._isLiked()) {
+            this._likeButton.classList.add('element__button_type_like_active');
+        } else {
+            this._likeButton.classList.remove('element__button_type_like_active');
+        }
     }
 
     _setEventListeners() {

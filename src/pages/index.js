@@ -87,7 +87,6 @@ const createCard = (item, userId) => {
             api.deleteLike(cardId)
                 .then((cardData) => {
                     card.renderLikes(cardData);
-                    console.log(cardData, "cardData")
                 })
                 .catch(err => console.log(err));
         },
@@ -154,7 +153,7 @@ const editAvatarPopup = new PopupWithForm(editAvatarPopupSelector, //попап 
         console.log(avatar);
         api.setUserAvatar(avatar)
             .then(() => {
-                userAvatar.src = `<%=require(${avatar})%>`;
+                userInfo.setUserAvatar(avatar);
                 editAvatarPopup.close();
             })
             .catch(err => console.log(err))
@@ -169,8 +168,8 @@ editAvatarPopup.setEventListeners();
 profileEditButton.addEventListener("click", () => {
     profilePopup.open();
     const getInfo = userInfo.getUserInfo();
-    profileName.value = getInfo.name;
-    profileInfo.value = getInfo.about;
+    profilePopup.setInputValues(getInfo);
+    profilePopup.setInputValues(getInfo);
     formDict["editProfileForm"].resetValidation();
 });
 
