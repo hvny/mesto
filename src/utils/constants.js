@@ -17,8 +17,6 @@ export const userNameSelector = ".profile__name";
 export const userStatusSelector = ".profile__status";
 export const userAvatarSelector = ".profile__avatar";
 
-export const userName = profileContainer.querySelector(userNameSelector);
-export const userStatus = profileContainer.querySelector(userStatusSelector);
 export const userAvatar = profileContainer.querySelector(userAvatarSelector);
 
 

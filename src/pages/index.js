@@ -9,8 +9,6 @@ import PopupWithSubmit from '../components/PopupWithSubmit.js';
 import UserInfo from "../components/UserInfo.js";
 import Api from '../components/Api.js';
 import {
-    userName,
-    userStatus,
     userAvatar,
     profileEditButton,
     profileAddButton,
